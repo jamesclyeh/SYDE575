@@ -14,3 +14,5 @@ lena_noisy = imnoise(lena, 'gaussian');
 PSNR(tire, tire_noisy)
 PSNR(cameraman, cameraman_noisy)
 PSNR(lena, lena_noisy)
+
+DigitalZooming(lena, cameraman)
