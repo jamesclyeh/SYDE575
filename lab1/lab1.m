@@ -39,3 +39,7 @@ imshow(conv2(cameraman, h2), [])
 subplot(2,2,4);
 imshow(conv2(cameraman, h3), [])
 
+%=================================================
+% Part 4: Point Operations For Image Enhancement
+%=================================================
+ImageEnhancement(tire)
