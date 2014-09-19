@@ -14,6 +14,7 @@ function [] = ImageEnhancement(tire)
   
   figure(3);
   light = im2double(tire).^0.5; 
+
   subplot(2, 1, 1);
   imshow(light);
   subplot(2, 1, 2);

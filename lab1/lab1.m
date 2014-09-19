@@ -9,6 +9,7 @@ tire_noisy = imnoise(tire, 'gaussian');
 cameraman = imread('cameraman.tif');
 cameraman_noisy = imnoise(cameraman, 'gaussian');
 lena = imread('../lena.tiff');
+lena_bw = rgb2gray(lena);
 lena_noisy = imnoise(lena, 'gaussian');
 
 %========================================
@@ -30,17 +31,22 @@ h1 = (1 / 6) * ones(1, 6);
 h2 = h1';
 h3 = [-1 1];
 
-subplot(2,2,1);
-imshow(cameraman)
+lena_bw = im2double(lena_bw);
+%subplot(2,2,1);
+figure;
+imshow(lena_bw)
 title('Original image');
-subplot(2,2,2);
-imshow(conv2(cameraman, h1), [])
+%subplot(2,2,2);
+figure;
+imshow(conv2(lena_bw, h1), [])
 title('Image with horizontal average filter');
-subplot(2,2,3);
-imshow(conv2(cameraman, h2), [])
+%subplot(2,2,3);
+figure;
+imshow(conv2(lena_bw, h2), [])
 title('Image with vertical average filter');
-subplot(2,2,4);
-imshow(conv2(cameraman, h3), [])
+%subplot(2,2,4);
+figure;
+imshow(conv2(lena_bw, h3))
 title('Image with edge detector');
 
 %=================================================
