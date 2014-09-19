@@ -13,7 +13,7 @@ function [] = ImageEnhancement(tire)
   hist(imhist(tireNegative));
   
   figure(3);
-  dark = im2double(tire).^0.5); 
+  dark = im2double(tire).^0.5; 
   subplot(2, 1, 1);
   imshow(dark);
   subplot(2, 1, 2);
