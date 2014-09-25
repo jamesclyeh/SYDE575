@@ -32,12 +32,16 @@ h3 = [-1 1];
 
 subplot(2,2,1);
 imshow(cameraman)
+title('Original image');
 subplot(2,2,2);
 imshow(conv2(cameraman, h1), [])
+title('Image with horizontal average filter');
 subplot(2,2,3);
 imshow(conv2(cameraman, h2), [])
+title('Image with vertical average filter');
 subplot(2,2,4);
 imshow(conv2(cameraman, h3), [])
+title('Image with edge detector');
 
 %=================================================
 % Part 4: Point Operations For Image Enhancement
