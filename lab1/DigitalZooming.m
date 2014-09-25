@@ -1,57 +1,51 @@
 function DigitalZooming = DigitalZooming(lena, cameraman)
     lenaGrayScale = rgb2gray(lena);
     
+    figure(1);
+    imshow(lenaGrayScale);
+    
+    figure(2);
+    imshow(cameraman);
+    
     lenaLowRes = imresize(lenaGrayScale, 0.25, 'bilinear');
     cameramanLowRes = imresize(cameraman, 0.25, 'bilinear');
     
-    figure
-    imagesc(lenaLowRes);
-    colormap gray
-    title('Lena Low Res');
+    figure(3);
+    imshow(lenaLowRes);
     
-    figure
-    imagesc(cameramanLowRes);
-    colormap gray
-    title('Cameraman Low Res');
+    figure(4);
+    imshow(cameramanLowRes);
     
-%     lenaLowRes = single(lenaLowRes);
     lenaBilinear = imresize(lenaLowRes, 4, 'bilinear');
     lenaNearest = imresize(lenaLowRes, 4, 'nearest');
     lenaCubic = imresize(lenaLowRes, 4, 'cubic');
     
-%     cameramanLowRes = single(cameramanLowRes);
     cameramanBilinear = imresize(cameramanLowRes, 4, 'bilinear');
     cameramanNearest = imresize(cameramanLowRes, 4, 'nearest');
     cameramanCubic = imresize(cameramanLowRes, 4, 'cubic');
     
-    figure
-    imagesc(lenaBilinear);
-    colormap gray
+    figure;
+    imshow(lenaBilinear);
     title('Lena Scaled Bilinear');
     
-    figure
-    imagesc(lenaNearest);
-    colormap gray
+    figure;
+    imshow(lenaNearest);
     title('Lena Scaled Nearest');
     
     figure
-    imagesc(lenaCubic);
-    colormap gray
+    imshow(lenaCubic);
     title('Lena Scaled Cubic');
     
     figure
-    imagesc(cameramanBilinear);
-    colormap gray
+    imshow(cameramanBilinear);
     title('Cameraman Scaled Bilinear');
     
     figure
-    imagesc(cameramanNearest);
-    colormap gray
+    imshow(cameramanNearest);
     title('Cameraman Scaled Nearest');
     
     figure
-    imagesc(cameramanCubic);
-    colormap gray
+    imshow(cameramanCubic);
     title('Camerman Scaled Cubic');
     
     PSNR(lenaGrayScale, lenaBilinear)
