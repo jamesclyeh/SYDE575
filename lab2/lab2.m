@@ -124,4 +124,26 @@ subplot(1,2,1);
 imshow(median_lena_salt_pepper);
 subplot(1,2,2);
 imhist(median_lena_salt_pepper);
-disp(strcat('PSNR oringinal vs median filter salt&pepper: ', num2str(psnr(lena, median_lena_salt_pepper))));
+disp(strcat('PSNR original vs median filter salt&pepper: ', num2str(psnr(lena, median_lena_salt_pepper))));
+
+%=========================================
+% Part 4: Sharpening in the Spatial Domain
+%=========================================
+%% High Boost Filter
+cameraman = im2double((imread('cameraman.tif')));
+h = fspecial('gaussian', 7);
+filter_cman = imfilter(cameraman, h);
+cman_subtracted = cameraman - filter_cman;
+figure(16);
+subplot(1,2,1);
+imshow(filter_cman);
+subplot(1,2,2);
+imshow(cman_subtracted);
+
+cman_add_subtracted = cameraman + cman_subtracted;
+figure(17);
+imshow(cman_add_subtracted);
+
+cman_add_half_subtracted = cameraman + (0.5 * cman_subtracted);
+figure(18);
+imshow(cman_add_half_subtracted);
