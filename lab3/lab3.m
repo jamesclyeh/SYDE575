@@ -48,3 +48,20 @@ figure(5);
 imshow(uint8(ifft2(mag)), []);
 figure (6);
 imshow(ifft2(exp(1*j*phase)), []);
+
+%================================================
+% Part 3: Noise Reduction in the Frequency Domain
+%================================================
+%% Load
+lena = im2double(rgb2gray(imread('../lena.tiff')));
+lena_gauss = imnoise(lena, 'gaussian', 0, 0.005);
+psnr(lena,lena_gauss);
+
+%% Log fourier spectra
+fft_lena = fftshift(fft2(lena));
+log_fft_lena=log(abs(fft_lena));
+fft_lena_gauss = fftshift(fft2(lena_gauss));
+log_fft_lena=log(abs(fft_lena_gauss));
+
+imshow(log_fft_lena, []);
+imshow(log_fft_lena, []);
