@@ -54,7 +54,9 @@ imshow(ifft2(exp(1*j*phase)), []);
 %================================================
 %% Load
 lena = im2double(rgb2gray(imread('../lena.tiff')));
+figure(30);
 lena_gauss = imnoise(lena, 'gaussian', 0, 0.005);
+imshow(lena_gauss);
 disp(strcat('PSNR oringinal vs gaussian noise: ', num2str(psnr(lena, lena_gauss))));
 
 %% Log fourier spectra
@@ -80,6 +82,8 @@ low_pass_fft_lena_gauss_60 = real(ifft2(ifftshift(fft_lena_gauss .* h_freq)));
 figure(33);
 imshow(low_pass_fft_lena_gauss_60, []);
 disp(strcat('PSNR oringinal vs LPF denoised radius 60: ', num2str(psnr(lena, low_pass_fft_lena_gauss_60))));
+imshow(34);
+imshow(h_freq);
 
 %% Ideal low pass filter r = 20
 r = 20;
@@ -101,3 +105,26 @@ gauss_fft_lena_gauss = real(ifft2(ifftshift(fft_lena_gauss .* h_norm)));
 figure(34);
 imshow(gauss_fft_lena_gauss, []);
 disp(strcat('PSNR oringinal vs gaussian denoised: ', num2str(psnr(lena, gauss_fft_lena_gauss))));
+
+%======================
+% Part 4: Filter Design
+%======================
+%% Load
+to_denoise = im2double(imread('frequnoisy.tiff'));
+fft_to_denoise = fftshift(fft2(to_denoise));
+log_fft_to_denoise = log(abs(fft_to_denoise));
+
+
+figure(41);
+imshow(to_denoise, []);
+figure(42);
+imshow(log_fft_to_denoise, []);
+fft_to_denoise(193,193) = min(fft_to_denoise(:));
+fft_to_denoise(65, 65) = min(fft_to_denoise(:));
+fft_to_denoise(139, 153) = min(fft_to_denoise(:));
+fft_to_denoise(119, 105) = min(fft_to_denoise(:));
+hack_fft_to_denoise = real(ifft2(ifftshift(fft_to_denoise)));
+figure(43);
+imshow(log(abs(fft_to_denoise)), []);
+figure(44);
+imshow(hack_fft_to_denoise, []);
