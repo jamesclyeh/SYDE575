@@ -27,15 +27,15 @@ f_blur_noise_restored = ifft2(fft2(f_blur_noise) ./ h_freq);
 disp(strcat('PSNR oringinal vs blurred with noise restored: ', num2str(psnr(f, f_blur_noise_restored))));
 
 figure(4);
-imshow(f_blur_noise);
+imshow(f_blur_noise, []);
 figure(5);
-imshow(f_blur_noise_restored);
+imshow(f_blur_noise_restored, []);
 
 %% restoration with weiner filter
 nsr = 0.002 / var(f(:));
 f_blur_noise_restored_weiner = deconvwnr(f_blur_noise, ifftshift(ifft2(h_freq)), nsr);
 figure(6);
-imshow(f_blur_noise_restored_weiner);
+imshow(f_blur_noise_restored_weiner, []);
 disp(strcat('PSNR oringinal vs blurred with noise restored with weiner: ', num2str(psnr(f, f_blur_noise_restored_weiner))));
 
 %========================================
