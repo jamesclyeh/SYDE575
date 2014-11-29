@@ -12,12 +12,16 @@ cr = peppers_ycbcr(:,:,3);
 
 figure(1);
 imshow(peppers);
+title('Original Image');
 figure(2);
 imshow(y);
+title('Luma');
 figure(3);
 imshow(cb);
+title('Chroma - Cb');
 figure(4);
 imshow(cr);
+title('Chroma - Cr');
 
 %% Cb Cr subsample
 cr2 = imresize(imresize(cr,0.5,'bilinear'),2,'bilinear');
@@ -29,8 +33,9 @@ peppers_cbcrsubsample(:,:,3) = cr2;
 
 figure(5);
 imshow(ycbcr2rgb(peppers_cbcrsubsample));
+title('Chrma subsampling');
 
-%% Chroma subsample
+%% Luma subsample
 y2 = imresize(imresize(y,0.5,'bilinear'),2,'bilinear');
 
 peppers_ysubsample = peppers_ycbcr;
@@ -38,6 +43,7 @@ peppers_ysubsample(:,:,1) = y2;
 
 figure(6);
 imshow(ycbcr2rgb(peppers_ysubsample));
+title('Luma subsampling');
 
 %========================================
 % Color Segmentation
