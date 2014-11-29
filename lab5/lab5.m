@@ -107,3 +107,73 @@ for k = 1:K
   figure(8 + k);
   imshow(tmp_peppers);
 end
+
+%========================================
+% Image Transform
+%========================================
+%% Plot DCT matrix
+f = rgb2gray(imread('../lena.tiff'));
+T = dctmtx(8);
+% for i = 1:8
+%     figure(i);
+%     stem(T(i, :));
+% end
+figure();
+subplot(1, 1, 1), imshow(T, []);
+F_trans = floor(blockproc(double(f) - 128, [8 8], @(x) T * x.data * T'));
+figure();
+subplot(1, 2, 1), imshow(F_trans(297:304, 81:88), []);
+subplot(1, 2, 2), imshow(F_trans(1:8, 1:8), []);
+
+figure();
+subplot(2, 1, 1), imshow(f(297:304, 81:88), []);
+subplot(2, 1, 2), imshow(f(1:8, 1:8), []);
+
+mask = [1 1 1 0 0 0 0 0;
+        1 1 0 0 0 0 0 0;
+        1 0 0 0 0 0 0 0;
+        0 0 0 0 0 0 0 0;
+        0 0 0 0 0 0 0 0;
+        0 0 0 0 0 0 0 0;
+        0 0 0 0 0 0 0 0;
+        0 0 0 0 0 0 0 0];
+    
+F_thresh = blockproc(F_trans, [8 8], @(x) mask.*x.data);
+f_thresh = floor(blockproc(F_thresh, [8 8], @(x) T'*x.data*T)) + 128;
+figure();
+imshow(f_thresh, []);
+%% test
+trans = F_trans(1:8, 1:8);
+for i = 1:8
+    figure(i);
+    stem(trans(i, :));
+end
+
+%========================================
+% Quantization
+%========================================
+%% Quantization
+T = dctmtx(8);
+k = 1;
+figure();
+for j = [1 3 5 10]
+    Z = [16 11 10 16 24 40 51 61;
+        12 12 14 19 26 58 60 55;
+        14 13 16 24 40 57 69 56;
+        14 17 22 29 51 87 80 62;
+        18 22 37 56 68 109 103 77;
+        24 35 55 64 81 104 113 92;
+        49 64 78 87 103 121 120 101;
+        72 92 95 98 112 100 103 99];
+    Z = j*Z;
+    F_trans = floor(blockproc(double(f) - 128, [8 8], @(x) T * x.data * T'));
+
+    F_trans_quant = round(blockproc(F_trans, [8 8], @(x)  x.data ./ Z));
+
+    % inverse
+    F_thresh = blockproc(F_trans_quant, [8 8], @(x) Z.*x.data);
+    f_thresh = blockproc(F_thresh, [8 8], @(x) T'*x.data*T) + 128;
+    figure();
+    imshow(f_thresh, []);
+    k = k +1;
+end
