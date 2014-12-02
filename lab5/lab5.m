@@ -148,6 +148,9 @@ F_thresh = blockproc(F_trans, [8 8], @(x) mask.*x.data);
 f_thresh = floor(blockproc(F_thresh, [8 8], @(x) T'*x.data*T)) + 128;
 figure();
 imshow(f_thresh, []);
+squaredErrorImage = (double(f) - double(f_thresh)) .^ 2;
+mse = sum(sum(squaredErrorImage)) / (512 * 512);
+PSNR = 10 * log10( 256^2 / mse)
 %% test
 trans = F_trans(1:8, 1:8);
 for i = 1:8
@@ -181,5 +184,8 @@ for j = [1 3 5 10]
     f_thresh = blockproc(F_thresh, [8 8], @(x) T'*x.data*T) + 128;
     figure();
     imshow(f_thresh, []);
+    squaredErrorImage = (double(f) - double(f_thresh)) .^ 2;
+    mse = sum(sum(squaredErrorImage)) / (512 * 512);
+    PSNR = 10 * log10( 256^2 / mse)
     k = k +1;
 end
